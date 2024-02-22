@@ -1,9 +1,9 @@
 <?php
 /**
  * Plugin Name:       WP Carbonbadge
- * Description:       An interactive block with the Interactivity API
- * Version:           0.1.1
- * Requires at least: 6.1
+ * Description:       Website Carbon Badge for WordPress, created with the WordPress Interactivity API.
+ * Version:           0.1.0
+ * Requires at least: 6.5
  * Requires PHP:      7.0
  * Author:            garridinsi
  * License:           GPL-2.0-or-later
@@ -13,7 +13,7 @@
  * @package           wp-carbonbadge
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
+if (!defined('ABSPATH')) {
 	exit; // Exit if accessed directly.
 }
 
@@ -24,7 +24,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @see https://developer.wordpress.org/reference/functions/register_block_type/
  */
-function wp_carbonbadge_wp_carbonbadge_block_init() {
-	register_block_type_from_metadata( __DIR__ . '/build' );
+function wp_carbonbadge_wp_carbonbadge_block_init()
+{
+	register_block_type_from_metadata(__DIR__ . '/build');
 }
-add_action( 'init', 'wp_carbonbadge_wp_carbonbadge_block_init' );
+add_action('init', 'wp_carbonbadge_wp_carbonbadge_block_init');
