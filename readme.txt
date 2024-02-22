@@ -1,4 +1,4 @@
-=== WP Carbonbadge ===
+=== Carbonbadge for Gutenberg ===
 Contributors: garridinsi
 Tags: block
 Donate link: https://buymeacoffee.com/garridinsi
