@@ -1,0 +1,28 @@
+
+# Ignore core WordPress files
+wp-admin/
+wp-includes/
+
+# Ignore plugin dependencies
+/vendor/
+/node_modules/
+
+# Ignore build and distribution files
+/dist/
+/build/
+
+# Ignore plugin logs and temporary files
+*.log
+*.tmp
+
+# Ignore IDE and editor specific files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Ignore miscellaneous files
+*.bak
+*.swp
+*.swo
+*.DS_Store
