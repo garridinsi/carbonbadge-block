@@ -11,20 +11,19 @@ const isAdminEnv = window.location.href.indexOf("wp-admin") > -1;
 
 /**
  * Encodes the current page URL.
- * If the current page is on the wp-admin side, the URL is encoded as "https://enekogarrido.com/".
+ * If the current page is on the wp-admin side, gets the homepage.
  * @type {string}
  */
 const currentPage = encodeURIComponent(
-  !isAdminEnv ? "https://enekogarrido.com/" : window.location.href
+  isAdminEnv ? window.location.href.split("wp-admin")[0] : window.location.href
 );
-
 /**
  * Represents the URL to be checked. If the URL ends with a slash, the URL is the same as the current page URL. Otherwise, the URL is the current page URL with a trailing slash because of API requirements.
  * @type {string}
  */
 const urlToCheck = currentPage.endsWith("/") ? currentPage : `${currentPage}/`;
 
-const { state } = store("wp-carbonbadge", {
+const { state } = store("carbonbadge-block", {
   callbacks: {
     doRequest: () => {
       const context = getContext();

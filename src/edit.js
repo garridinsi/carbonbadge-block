@@ -28,7 +28,7 @@ export default function Edit({ attributes, setAttributes }) {
 
   const measuringText = __(
     "Measuring CO<sub>2</sub>&hellip;",
-    "wp-carbonbadge"
+    "carbonbadge-block"
   );
   const [measureDiv, setMeasureDiv] = useState(measuringText);
   const [belowText, setBelowText] = useState("&nbsp;");
@@ -36,7 +36,9 @@ export default function Edit({ attributes, setAttributes }) {
 
   const isAdminEnv = window.location.href.indexOf("wp-admin") > -1;
   const currentPage = encodeURIComponent(
-    isAdminEnv ? "https://enekogarrido.com/" : window.location.href
+    isAdminEnv
+      ? window.location.href.split("wp-admin")[0]
+      : window.location.href
   );
   const urlToCheck = currentPage.endsWith("/")
     ? currentPage
@@ -55,16 +57,16 @@ export default function Edit({ attributes, setAttributes }) {
         localStorage.setItem(`wcb_${urlToCheck}`, JSON.stringify(json));
       })
       .catch((err) => {
-        const noResultText = __("No Result", "wp-carbonbadge");
+        const noResultText = __("No Result", "carbonbadge-block");
         setMeasureDiv(noResultText);
         localStorage.removeItem(`wcb_${urlToCheck}`);
         throw new Error(err);
       });
   };
   const renderResult = (e) => {
-    const cleanerThanText = __("Cleaner than", "wp-carbonbadge");
-    const percentageText = __("of pages tested", "wp-carbonbadge");
-    const ofCO2Text = __("g of CO<sub>2</sub>/view", "wp-carbonbadge");
+    const cleanerThanText = __("Cleaner than", "carbonbadge-block");
+    const percentageText = __("of pages tested", "carbonbadge-block");
+    const ofCO2Text = __("g of CO<sub>2</sub>/view", "carbonbadge-block");
     setMeasureDiv(`${e.c}${ofCO2Text}`);
     setBelowText(`${cleanerThanText} ${e.p}% ${percentageText}`);
   };
@@ -92,10 +94,10 @@ export default function Edit({ attributes, setAttributes }) {
   return (
     <>
       <InspectorControls>
-        <PanelBody title={__("Settings", "wp-carbonbadge")}>
+        <PanelBody title={__("Settings", "carbonbadge-block")}>
           <ToggleControl
             checked={!!useDarkMode}
-            label={__("Use dark mode", "wp-carbonbadge")}
+            label={__("Use dark mode", "carbonbadge-block")}
             onChange={() =>
               setAttributes({
                 useDarkMode: !useDarkMode,
@@ -119,7 +121,7 @@ export default function Edit({ attributes, setAttributes }) {
               rel="noopener noreferrer"
               href="https://websitecarbon.com"
             >
-              {__("Website Carbon", "wp-carbonbadge")}
+              {__("Website Carbon", "carbonbadge-block")}
             </a>
           </div>
           <span

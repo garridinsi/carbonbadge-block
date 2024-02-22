@@ -18,14 +18,14 @@ if (!empty($attributes['useDarkMode'])) {
   $use_dark_mode = false;
 }
 wp_interactivity_state(
-  'wp-carbonbadge',
+  'carbonbadge-block',
   array(
     'isDarkMode' => $use_dark_mode,
   )
 );
 ?>
 
-<div <?php echo get_block_wrapper_attributes(); ?> data-wp-interactive='{ "namespace": "wp-carbonbadge" }'
+<div <?php echo get_block_wrapper_attributes(); ?> data-wp-interactive='{ "namespace": "carbonbadge-block" }'
   data-wp-context='{ "isOpen": false, "showTheResult": false, "showLoading": false, "showNoResult": false, "measureDiv": "", "belowText": "", "darkMode": false}'
   data-wp-run="callbacks.doRequest">
   <div class="wcb carbonbadge" data-wp-class--wcb-d="context.darkMode">

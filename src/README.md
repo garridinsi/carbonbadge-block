@@ -5,7 +5,7 @@
 > **Note**
 > This block uses the API shared at [Proposal: The Interactivity API – A better developer experience in building interactive blocks](https://make.wordpress.org/core/2023/03/30/proposal-the-interactivity-api-a-better-developer-experience-in-building-interactive-blocks/).
 
-This block has been created with the `wp-carbonbadge-interactive-template` and shows a basic structure of an interactive block that uses the Interactivity API.
+This block has been created with the `carbonbadge-block-interactive-template` and shows a basic structure of an interactive block that uses the Interactivity API.
 
 Check the following resources for more info about the Interactivity API:
 

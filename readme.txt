@@ -18,7 +18,7 @@ The Website Carbon widget Gutenberg block, made with the Interactivity API.
 They provide a official badge to put on your website, and with this plugin, you can have that badge as a reactive Gutenberg block, thanks to the new [Interactivity API](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-interactivity/)
 
 == Installation ==
-1. Upload the plugin files to the `/wp-content/plugins/wp-carbonbadge` directory, or install the plugin through the WordPress plugins screen directly.
+1. Upload the plugin files to the `/wp-content/plugins/carbonbadge-block` directory, or install the plugin through the WordPress plugins screen directly.
 2. Activate the plugin through the \'Plugins\' screen in WordPress.
 3. Place the block on any Gutenberg post or page.
 

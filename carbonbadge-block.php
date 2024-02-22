@@ -6,11 +6,14 @@
  * Requires at least: 6.5
  * Requires PHP:      7.0
  * Author:            garridinsi
+ * Plugin URI:        https://github.com/garridinsi/wp-carbonbadge
+ * Author URI:        https://profiles.wordpress.org/garridinsi/
  * License:           GPL-3.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-3.0.html
- * Text Domain:       wp-carbonbadge
+ * Text Domain:       carbonbadge-block
  *
- * @package           wp-carbonbadge
+ * @link              https://profiles.wordpress.org/garridinsi/
+ * @package           carbonbadge-block
  */
 
 if (!defined('ABSPATH')) {
@@ -24,8 +27,8 @@ if (!defined('ABSPATH')) {
  *
  * @see https://developer.wordpress.org/reference/functions/register_block_type/
  */
-function wp_carbonbadge_wp_carbonbadge_block_init()
+function carbonbadge_block_carbonbadge_block_block_init()
 {
 	register_block_type_from_metadata(__DIR__ . '/build');
 }
-add_action('init', 'wp_carbonbadge_wp_carbonbadge_block_init');
+add_action('init', 'carbonbadge_block_carbonbadge_block_block_init');

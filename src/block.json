@@ -1,17 +1,17 @@
 {
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
-  "name": "wp-carbonbadge/wp-carbonbadge",
+  "name": "carbonbadge-block/carbonbadge-block",
   "version": "0.1.0",
-  "title": "WP Carbonbadge",
+  "title": "Carbonbadge",
   "category": "widgets",
   "icon": "media-interactive",
-  "description": "An interactive block with the Interactivity API",
+  "description": "Block to display your website's carbon footprint using the Carbonbadge API.",
   "example": {},
   "supports": {
     "interactivity": true
   },
-  "textdomain": "wp-carbonbadge",
+  "textdomain": "carbonbadge-block",
   "editorScript": "file:./index.js",
   "editorStyle": "file:./index.css",
   "style": "file:./style-index.css",
