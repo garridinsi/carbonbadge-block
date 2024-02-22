@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name:       Carbonbadge for Gutenberg
+ * Plugin Name:       Carbonbadge Block
  * Description:       The Website Carbon widget Gutenberg block, made with the Interactivity API.
  * Version:           0.1.0
  * Requires at least: 6.5
