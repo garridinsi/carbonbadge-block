@@ -1,9 +1,9 @@
 {
   "name": "carbonbadge-block",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "An interactive block with the Interactivity API",
   "author": "The WordPress Contributors",
-  "license": "GPL-2.0-or-later",
+  "license": "GPL-3.0-or-later",
   "main": "build/index.js",
   "scripts": {
     "build": "wp-scripts build --experimental-modules",
