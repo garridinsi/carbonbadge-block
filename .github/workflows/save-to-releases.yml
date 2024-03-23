@@ -15,7 +15,6 @@ jobs:
 
     - name: Build plugin # Remove or modify this step as needed
       run: |
-        composer install --no-dev
         npm install
         npm run build
 
