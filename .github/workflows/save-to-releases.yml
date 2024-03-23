@@ -17,6 +17,7 @@ jobs:
       run: |
         npm install
         npm run build
+        npm run plugin-zip
 
     - name: Create GitHub release
       uses: softprops/action-gh-release@v1
