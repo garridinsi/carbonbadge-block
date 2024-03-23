@@ -14,12 +14,12 @@ const isAdminEnv = window.location.href.indexOf("wp-admin") > -1;
  * If the current page is on the wp-admin side, gets the homepage.
  * @type {string}
  */
-// const currentPage = encodeURIComponent(
-//   isAdminEnv ? window.location.href.split("wp-admin")[0] : window.location.href
-// );
+const currentPage = encodeURIComponent(
+  isAdminEnv ? window.location.href.split("wp-admin")[0] : window.location.href
+);
 
 // Just for testing
-const currentPage = encodeURIComponent("https://enekogarrido.com/");
+// const currentPage = encodeURIComponent("https://enekogarrido.com/");
 
 /**
  * Represents the URL to be checked. If the URL ends with a slash, the URL is the same as the current page URL.

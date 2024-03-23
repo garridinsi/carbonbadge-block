@@ -4,7 +4,7 @@ Tags: block
 Donate link: https://buymeacoffee.com/garridinsi
 Requires at least: 6.5
 Tested up to: 6.5
-Stable tag: 0.1.2
+Stable tag: 0.1.3
 License: GPL-3.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -23,6 +23,9 @@ They provide a official badge to put on your website, and with this plugin, you 
 3. Place the block on any Gutenberg post or page.
 
 == Changelog ==
+= 0.1.3 =
+* Fix error when generating the plugin, currentPage var was taking the testing page instead of the current page
+
 = 0.1.2 =
 * Fix localization issues
 * Improve in code documentation
