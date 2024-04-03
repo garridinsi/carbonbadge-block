@@ -50,7 +50,7 @@ const { state } = store("carbonbadge-block", {
 
 /**
  * Renders the result of a measurement.
- * @param {Object} e - The measurement object.
+ * @param {Object} e                      - The measurement object.
  * @param {Object} [context=getContext()] - The context object.
  */
 const renderResult = (e, context = getContext()) => {
@@ -66,8 +66,8 @@ const renderResult = (e, context = getContext()) => {
  * case 1: showTheResult is true, showLoading and showNoResult are false.
  * case 2: showNoResult is true, showLoading and showTheResult are false.
  * case 3: showLoading is true, showNoResult and showTheResult are false.
- * @param {number} action - The action to perform.
- * @param {object} [context=getContext()] - The context object to modify.
+ * @param {number} action                 - The action to perform.
+ * @param {Object} [context=getContext()] - The context object to modify.
  */
 const setProps = (action, context = getContext()) => {
   switch (action) {
