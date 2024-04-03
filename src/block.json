@@ -2,10 +2,9 @@
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
   "name": "carbonbadge-block/carbonbadge-block",
-  "version": "0.1.4",
+  "version": "1.0.0",
   "title": "Carbonbadge",
   "category": "widgets",
-  "icon": "media-interactive",
   "description": "Block to display your website's carbon footprint using the Carbonbadge API.",
   "example": {},
   "supports": {

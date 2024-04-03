@@ -4,10 +4,10 @@
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
  */
-import { InspectorControls, useBlockProps } from "@wordpress/block-editor";
-import { PanelBody, ToggleControl } from "@wordpress/components";
-import { __ } from "@wordpress/i18n";
-import React, { useEffect, useState } from "react";
+import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
+import { PanelBody, ToggleControl } from '@wordpress/components';
+import { __ } from '@wordpress/i18n';
+import React, { useEffect, useState } from 'react';
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -17,121 +17,164 @@ import React, { useEffect, useState } from "react";
  *
  * @param {Object}   props               Properties passed to the function.
  * @param {Object}   props.attributes    Available block attributes.
- * @param {Function} props.setAttributes Function that updates individual attributes.
+ * @param {Function} props.setAttributes Function thxat updates individual attributes.
  *
  * @return {Element} Element to render.
  */
-export default function Edit({ attributes, setAttributes }) {
-  const blockProps = useBlockProps();
+export default function Edit( { attributes, setAttributes } ) {
+	/**
+	 * The properties for the block.
+	 *
+	 * @type {import('@wordpress/block-editor').BlockProps}
+	 */
+	const blockProps = useBlockProps();
 
-  const { useDarkMode } = attributes;
+	/**
+	 * The attributes object. It contains the block's settings.
+	 * The useDarkMode attribute is a boolean that indicates whether the block should use dark mode or not.
+	 *
+	 * @type {Object}
+	 */
+	const { useDarkMode } = attributes;
 
-  const measuringText = __(
-    "Measuring CO<sub>2</sub>&hellip;",
-    "carbonbadge-block"
-  );
-  const [measureDiv, setMeasureDiv] = useState(measuringText);
-  const [belowText, setBelowText] = useState("&nbsp;");
-  const [darkMode, setDarkMode] = useState(useDarkMode);
+	const measuringText = __(
+		'Measuring CO<sub>2</sub>&hellip;',
+		'carbonbadge-block'
+	);
+	const [ measureDiv, setMeasureDiv ] = useState( measuringText );
+	const [ belowText, setBelowText ] = useState( '&nbsp;' );
+	const [ darkMode, setDarkMode ] = useState( useDarkMode );
 
-  const isAdminEnv = window.location.href.indexOf("wp-admin") > -1;
-  const currentPage = encodeURIComponent(
-    isAdminEnv
-      ? window.location.href.split("wp-admin")[0]
-      : window.location.href
-  );
-  const urlToCheck = currentPage.endsWith("/")
-    ? currentPage
-    : `${currentPage}/`;
-  const newRequest = (e = false) => {
-    fetch(`https://api.websitecarbon.com/b?url=${urlToCheck}`)
-      .then((response) => {
-        if (!response.ok) throw Error(response);
-        return response.json();
-      })
-      .then((json) => {
-        if (e) {
-          renderResult(json);
-        }
-        json.t = new Date().getTime();
-        localStorage.setItem(`wcb_${urlToCheck}`, JSON.stringify(json));
-      })
-      .catch((err) => {
-        const noResultText = __("No Result", "carbonbadge-block");
-        setMeasureDiv(noResultText);
-        localStorage.removeItem(`wcb_${urlToCheck}`);
-        throw new Error(err);
-      });
-  };
-  const renderResult = (e) => {
-    const cleanerThanText = __("Cleaner than", "carbonbadge-block");
-    const percentageText = __("of pages tested", "carbonbadge-block");
-    const ofCO2Text = __("g of CO<sub>2</sub>/view", "carbonbadge-block");
-    setMeasureDiv(`${e.c}${ofCO2Text}`);
-    setBelowText(`${cleanerThanText} ${e.p}% ${percentageText}`);
-  };
+	/**
+	 * Indicates whether the current environment is the WordPress admin area.
+	 * @type {boolean}
+	 */
+	const isAdminEnv = window.location.href.indexOf( 'wp-admin' ) > -1;
 
-  useEffect(() => {
-    if ("fetch" in window) {
-      const saved = localStorage.getItem(`wcb_${urlToCheck}`);
-      const now = new Date().getTime();
-      if (saved) {
-        const jsonSaved = JSON.parse(saved);
-        renderResult(jsonSaved);
-        if (now - jsonSaved.t > 864e5) {
-          newRequest(true);
-        }
-      } else {
-        newRequest();
-      }
-    }
-  }, [urlToCheck]);
+	/**
+	 * Gets the current page URL and encodes it. If the current environment is the WordPress admin area, it gets the URL of the front end.
+	 *
+	 * @type {string}
+	 */
+	const currentPage = encodeURIComponent(
+		isAdminEnv
+			? window.location.href.split( 'wp-admin' )[ 0 ]
+			: window.location.href
+	);
 
-  useEffect(() => {
-    setDarkMode(useDarkMode);
-  }, [useDarkMode]);
+	/**
+	 * The URL to check. If the current page URL does not end with a slash, it appends one.
+	 * @type {string}
+	 */
+	const urlToCheck = currentPage.endsWith( '/' )
+		? currentPage
+		: `${ currentPage }/`;
 
-  return (
-    <>
-      <InspectorControls>
-        <PanelBody title={__("Settings", "carbonbadge-block")}>
-          <ToggleControl
-            checked={!!useDarkMode}
-            label={__("Use dark mode", "carbonbadge-block")}
-            onChange={() =>
-              setAttributes({
-                useDarkMode: !useDarkMode,
-              })
-            }
-          />
-        </PanelBody>
-      </InspectorControls>
-      <div {...blockProps}>
-        <div className={`wcb carbonbadge ${darkMode ? "wcb-d" : ""}`}>
-          <div className="wcb_p">
-            <span
-              className="wcb_g"
-              dangerouslySetInnerHTML={{
-                __html: measureDiv,
-              }}
-            ></span>
-            <a
-              className="wcb_a"
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://websitecarbon.com"
-            >
-              {__("Website Carbon", "carbonbadge-block")}
-            </a>
-          </div>
-          <span
-            className="wcb_2"
-            dangerouslySetInnerHTML={{
-              __html: belowText,
-            }}
-          ></span>
-        </div>
-      </div>
-    </>
-  );
+	/**
+	 * Makes a new request to the website carbon API and stores the result in local storage.
+	 * @param {boolean} render - Optional parameter indicating whether to render the result or not.
+	 */
+	const newRequest = ( render = false ) => {
+		fetch( `https://api.websitecarbon.com/b?url=${ urlToCheck }` )
+			.then( ( response ) => {
+				if ( ! response.ok ) throw Error( response );
+				return response.json();
+			} )
+			.then( ( json ) => {
+				if ( render ) {
+					renderResult( json );
+				}
+				json.t = new Date().getTime();
+				localStorage.setItem(
+					`wcb_${ urlToCheck }`,
+					JSON.stringify( json )
+				);
+			} )
+			.catch( ( err ) => {
+				const noResultText = __( 'No Result', 'carbonbadge-block' );
+				setMeasureDiv( noResultText );
+				localStorage.removeItem( `wcb_${ urlToCheck }` );
+				throw new Error( err );
+			} );
+	};
+	/**
+	 * Renders the result based on the provided data. The data object contains the measurement and percentage values.
+	 * Sets the measurement and percentage values in the state.
+	 *
+	 * @param {Object} data - The data object containing the measurement and percentage values.
+	 * @return {void}
+	 */
+	const renderResult = ( data ) => {
+		const cleanerThanText = __( 'Cleaner than', 'carbonbadge-block' );
+		const percentageText = __( 'of pages tested', 'carbonbadge-block' );
+		const ofCO2Text = __( 'g of CO<sub>2</sub>/view', 'carbonbadge-block' );
+		setMeasureDiv( `${ data.c }${ ofCO2Text }` );
+		setBelowText( `${ cleanerThanText } ${ data.p }% ${ percentageText }` );
+	};
+
+	useEffect( () => {
+		if ( 'fetch' in window ) {
+			const saved = localStorage.getItem( `wcb_${ urlToCheck }` );
+			const now = new Date().getTime();
+			if ( saved ) {
+				const jsonSaved = JSON.parse( saved );
+				renderResult( jsonSaved );
+				if ( now - jsonSaved.t > 864e5 ) {
+					newRequest( true );
+				}
+			} else {
+				newRequest();
+			}
+		}
+	}, [ urlToCheck ] );
+
+	useEffect( () => {
+		setDarkMode( useDarkMode );
+	}, [ useDarkMode ] );
+
+	return (
+		<>
+			<InspectorControls>
+				<PanelBody title={ __( 'Settings', 'carbonbadge-block' ) }>
+					<ToggleControl
+						checked={ !! useDarkMode }
+						label={ __( 'Use dark mode', 'carbonbadge-block' ) }
+						onChange={ () =>
+							setAttributes( {
+								useDarkMode: ! useDarkMode,
+							} )
+						}
+					/>
+				</PanelBody>
+			</InspectorControls>
+			<div { ...blockProps }>
+				<div
+					className={ `wcb carbonbadge ${ darkMode ? 'wcb-d' : '' }` }
+				>
+					<div className="wcb_p">
+						<span
+							className="wcb_g"
+							dangerouslySetInnerHTML={ {
+								__html: measureDiv,
+							} }
+						></span>
+						<a
+							className="wcb_a"
+							target="_blank"
+							rel="noopener noreferrer"
+							href="https://websitecarbon.com"
+						>
+							{ __( 'Website Carbon', 'carbonbadge-block' ) }
+						</a>
+					</div>
+					<span
+						className="wcb_2"
+						dangerouslySetInnerHTML={ {
+							__html: belowText,
+						} }
+					></span>
+				</div>
+			</div>
+		</>
+	);
 }

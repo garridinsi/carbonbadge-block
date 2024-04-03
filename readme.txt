@@ -4,7 +4,7 @@ Tags: block
 Donate link: https://buymeacoffee.com/garridinsi
 Requires at least: 6.5
 Tested up to: 6.5
-Stable tag: 0.1.4
+Stable tag: 1.0.0
 License: GPL-3.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -31,6 +31,11 @@ The Website Carbon service is provided by [Wholegrain digital](https://www.whole
 3. Place the block on any Gutenberg post or page.
 
 == Changelog ==
+= 1.0.0 =
+* First stable release
+* Add block icon on the editor
+* Better code documentation
+
 = 0.1.4 =
 * Fix error when generating the plugin, currentPage var was taking the testing page instead of the current page
 

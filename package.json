@@ -1,28 +1,30 @@
 {
-  "name": "carbonbadge-block",
-  "version": "0.1.4",
-  "description": "An interactive block with the Interactivity API",
-  "author": "The WordPress Contributors",
-  "license": "GPL-3.0-or-later",
-  "main": "build/index.js",
-  "scripts": {
-    "build": "wp-scripts build --experimental-modules",
-    "format": "wp-scripts format",
-    "lint:css": "wp-scripts lint-style",
-    "lint:js": "wp-scripts lint-js",
-    "lint:js:fix": "wp-scripts lint-js --fix",
-    "packages-update": "wp-scripts packages-update",
-    "plugin-zip": "wp-scripts plugin-zip",
-    "start": "wp-scripts start --experimental-modules"
-  },
-  "files": [
-    "[^.]*"
-  ],
-  "dependencies": {
-    "@wordpress/interactivity": "^5.0.0",
-    "react": "^18.2.0"
-  },
-  "devDependencies": {
-    "@wordpress/scripts": "^27.2.0"
-  }
+	"name": "carbonbadge-block",
+	"version": "1.0.0",
+	"description": "An interactive block with the Interactivity API",
+	"author": "The WordPress Contributors",
+	"license": "GPL-3.0-or-later",
+	"main": "build/index.js",
+	"prettier": "@wordpress/prettier-config",
+	"scripts": {
+		"build": "wp-scripts build --experimental-modules",
+		"format": "wp-scripts format",
+		"lint:css": "wp-scripts lint-style",
+		"lint:js": "wp-scripts lint-js",
+		"lint:js:fix": "wp-scripts lint-js --fix",
+		"packages-update": "wp-scripts packages-update",
+		"plugin-zip": "wp-scripts plugin-zip",
+		"start": "wp-scripts start --experimental-modules"
+	},
+	"files": [
+		"[^.]*"
+	],
+	"dependencies": {
+		"@wordpress/interactivity": "^5.0.0",
+		"react": "^18.2.0"
+	},
+	"devDependencies": {
+		"@wordpress/prettier-config": "^3.12.0",
+		"@wordpress/scripts": "^27.2.0"
+	}
 }
