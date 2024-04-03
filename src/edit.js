@@ -164,6 +164,8 @@ export default function Edit( { attributes, setAttributes } ) {
 							rel="noopener noreferrer"
 							href="https://websitecarbon.com"
 						>
+							/* translators: Don't translate, Website Carbon is
+							the name of a service: https://websitecarbon.com */
 							{ __( 'Website Carbon', 'carbonbadge-block' ) }
 						</a>
 					</div>

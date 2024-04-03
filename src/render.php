@@ -14,7 +14,7 @@ if (!defined('ABSPATH'))
 
 // Generate unique id for aria-controls.
 $unique_id = wp_unique_id('p-');
-if (!empty ($attributes['useDarkMode'])) {
+if (!empty($attributes['useDarkMode'])) {
   $use_dark_mode = $attributes['useDarkMode'];
 } else {
   $use_dark_mode = false;
@@ -44,6 +44,7 @@ wp_interactivity_state(
         <?php esc_html_e('g of CO₂/view', 'carbonbadge-block'); ?>
       </span>
       <a class="wcb_a" target="_blank" rel="noopener noreferrer" href="https://websitecarbon.com">
+        /* translators: Don't translate, Website Carbon is the name of a service: https://websitecarbon.com */
         <?php esc_html_e('Website Carbon', 'carbonbadge-block'); ?>
       </a>
     </div>
