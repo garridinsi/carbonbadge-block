@@ -106,10 +106,10 @@ export default function Edit( { attributes, setAttributes } ) {
 	 */
 	const renderResult = ( data ) => {
 		/*
-		 * translators: %s is a placeholder for the percentage of pages tested. Please note that the second % symbol is not a placeholder and should be part of the text.
+		 * translators: %s is a placeholder for the percentage of pages tested. Please note that &#37; means % and should be part of the text.
 		 */
 		const belowText = __(
-			'Cleaner than %s% of pages tested',
+			'Cleaner than&nbsp;%s&#37; of pages tested',
 			'carbonbadge-block'
 		).replace( '%s', data.p );
 

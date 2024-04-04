@@ -76,7 +76,7 @@ wp_interactivity_state(
     </div>
     <div data-wp-bind--hidden="!context.showTheResult">
       <span class="wcb_2">
-        <?php printf(__('Cleaner than %s% of pages tested', 'carbonbadge-block'), '<span data-wp-text="context.belowText"></span>'); ?>
+        <?php printf(__('Cleaner than&nbsp;%s&#37; of pages tested', 'carbonbadge-block'), '<span data-wp-text="context.belowText"></span>'); ?>
       </span>
     </div>
   </div>

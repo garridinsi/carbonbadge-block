@@ -21,7 +21,7 @@ const currentPage = encodeURIComponent(
 );
 
 // Just for testing
-// const currentPage = encodeURIComponent("https://enekogarrido.com/");
+// const currentPage = encodeURIComponent( 'https://enekogarrido.com/' );
 
 /**
  * Represents the URL to be checked. If the URL ends with a slash, the URL is the same as the current page URL.
