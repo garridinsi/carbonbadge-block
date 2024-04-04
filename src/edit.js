@@ -6,7 +6,7 @@
  */
 import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
 import { PanelBody, ToggleControl } from '@wordpress/components';
-import { __ } from '@wordpress/i18n';
+import { __, _n } from '@wordpress/i18n';
 import React, { useEffect, useState } from 'react';
 
 /**
@@ -37,10 +37,7 @@ export default function Edit( { attributes, setAttributes } ) {
 	 */
 	const { useDarkMode } = attributes;
 
-	const measuringText = __(
-		'Measuring CO<sub>2</sub>&hellip;',
-		'carbonbadge-block'
-	);
+	const measuringText = __( 'Measuring CO₂', 'carbonbadge-block' );
 	const [ measureDiv, setMeasureDiv ] = useState( measuringText );
 	const [ belowText, setBelowText ] = useState( '&nbsp;' );
 	const [ darkMode, setDarkMode ] = useState( useDarkMode );
@@ -61,6 +58,9 @@ export default function Edit( { attributes, setAttributes } ) {
 			? window.location.href.split( 'wp-admin' )[ 0 ]
 			: window.location.href
 	);
+
+	// Just for testing, should be commented out in production
+	// const currentPage = encodeURIComponent( 'https://enekogarrido.com' );
 
 	/**
 	 * The URL to check. If the current page URL does not end with a slash, it appends one.
@@ -105,11 +105,24 @@ export default function Edit( { attributes, setAttributes } ) {
 	 * @return {void}
 	 */
 	const renderResult = ( data ) => {
-		const cleanerThanText = __( 'Cleaner than', 'carbonbadge-block' );
-		const percentageText = __( 'of pages tested', 'carbonbadge-block' );
-		const ofCO2Text = __( 'g of CO<sub>2</sub>/view', 'carbonbadge-block' );
-		setMeasureDiv( `${ data.c }${ ofCO2Text }` );
-		setBelowText( `${ cleanerThanText } ${ data.p }% ${ percentageText }` );
+		/*
+		 * translators: %s is a placeholder for the percentage of pages tested. Please note that the second % symbol is not a placeholder and should be part of the text.
+		 */
+		const belowText = __(
+			'Cleaner than %s%  of pages tested',
+			'carbonbadge-block'
+		).replace( '%s', data.p );
+
+		/*
+		 * translators: %s is a placeholder for the amount of CO2 in grams.
+		 */
+		const ofCO2Text = __(
+			'%s g of CO<sub>2</sub>/view',
+			'carbonbadge-block'
+		).replace( '%s', data.c );
+
+		setMeasureDiv( ofCO2Text );
+		setBelowText( belowText );
 	};
 
 	useEffect( () => {
@@ -164,8 +177,8 @@ export default function Edit( { attributes, setAttributes } ) {
 							rel="noopener noreferrer"
 							href="https://websitecarbon.com"
 						>
-							/* translators: Don't translate, Website Carbon is
-							the name of a service: https://websitecarbon.com */
+							{ /* translators: Don't translate, Website Carbon is
+							the name of a service: https://websitecarbon.com */ }
 							{ __( 'Website Carbon', 'carbonbadge-block' ) }
 						</a>
 					</div>
