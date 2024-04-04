@@ -109,17 +109,17 @@ export default function Edit( { attributes, setAttributes } ) {
 		 * translators: %s is a placeholder for the percentage of pages tested. Please note that the second % symbol is not a placeholder and should be part of the text.
 		 */
 		const belowText = __(
-			'Cleaner than %s%  of pages tested',
+			'Cleaner than %s% of pages tested',
 			'carbonbadge-block'
 		).replace( '%s', data.p );
 
 		/*
 		 * translators: %s is a placeholder for the amount of CO2 in grams.
 		 */
-		const ofCO2Text = __(
-			'%s g of CO<sub>2</sub>/view',
-			'carbonbadge-block'
-		).replace( '%s', data.c );
+		const ofCO2Text = __( '%sg of CO₂/view', 'carbonbadge-block' ).replace(
+			'%s',
+			data.c
+		);
 
 		setMeasureDiv( ofCO2Text );
 		setBelowText( belowText );
