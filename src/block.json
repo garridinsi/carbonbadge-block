@@ -26,6 +26,9 @@
 		"customUrlToCheck": {
 			"type": "string",
 			"default": ""
+		},
+		"showLinkToWebCarbon": {
+			"type": "boolean"
 		}
 	}
 }

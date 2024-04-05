@@ -6,9 +6,15 @@
  */
 import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
 import { PanelBody, ToggleControl, TextControl } from '@wordpress/components';
-import { __ } from '@wordpress/i18n';
+import { __, _x } from '@wordpress/i18n';
 import React, { useEffect, useState } from 'react';
-import { getCurrentPage } from './controller';
+import {
+	determineUrl,
+	getCurrentPage,
+	getFromStorage,
+	removeFromStorage,
+	setToStorage,
+} from './controller';
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -40,7 +46,7 @@ export default function Edit( { attributes, setAttributes } ) {
 	const { useDarkMode, showLinkToWebCarbon, customUrlToCheck, useCustomUrl } =
 		attributes;
 
-	const measuringText = __( 'Measuring CO₂...', 'carbonbadge-block' );
+	const measuringText = __( 'Measuring CO₂…', 'carbonbadge-block' );
 	const [ measureDiv, setMeasureDiv ] = useState( measuringText );
 	const [ belowText, setBelowText ] = useState( '&nbsp;' );
 	const [ darkMode, setDarkMode ] = useState( useDarkMode );
@@ -51,41 +57,29 @@ export default function Edit( { attributes, setAttributes } ) {
 	const [ decodedCustomUrlToCheck, setDecodedCustomUrlToCheck ] = useState(
 		decodeURIComponent( customUrlToCheck )
 	);
-
-	const whatUrl = useCustomUrlState
-		? decodedCustomUrlToCheck
-		: window.location.href;
-
-	const [ urlToCheck, setUrlToCheck ] = useState( getCurrentPage( whatUrl ) );
-
-	useEffect( () => {
-		newRequest( true );
-	}, [ urlToCheck ] );
+	const [ urlToCheck, setUrlToCheck ] = useState(
+		getCurrentPage(
+			determineUrl( useCustomUrlState, decodedCustomUrlToCheck )
+		)
+	);
 
 	/**
 	 * Makes a new request to the website carbon API and stores the result in local storage.
-	 * @param {boolean} render - Optional parameter indicating whether to render the result or not.
 	 */
-	const newRequest = ( render = false ) => {
+	const newRequest = () => {
 		fetch( `https://api.websitecarbon.com/b?url=${ urlToCheck }` )
 			.then( ( response ) => {
 				if ( ! response.ok ) throw Error( response );
 				return response.json();
 			} )
 			.then( ( json ) => {
-				if ( render ) {
-					renderResult( json );
-				}
-				json.t = new Date().getTime();
-				localStorage.setItem(
-					`wcb_${ urlToCheck }`,
-					JSON.stringify( json )
-				);
+				renderResult( json );
+				setToStorage( urlToCheck, json );
 			} )
 			.catch( ( err ) => {
 				const noResultText = __( 'No Result', 'carbonbadge-block' );
 				setMeasureDiv( noResultText );
-				localStorage.removeItem( `wcb_${ urlToCheck }` );
+				removeFromStorage( urlToCheck );
 				throw new Error( err );
 			} );
 	};
@@ -97,21 +91,19 @@ export default function Edit( { attributes, setAttributes } ) {
 	 * @return {void}
 	 */
 	const renderResult = ( data ) => {
-		/*
-		 * translators: %s is a placeholder for the percentage of pages tested. Please note that &#37; means % and should be part of the text.
-		 */
-		const belowTextToSet = __(
-			'Cleaner than&nbsp;%s&#37; of pages tested',
+		// translators: %s is a placeholder for the percentage of pages tested. The second % is the percentage symbol.
+		const belowTextToSet = _x(
+			'Cleaner than %s% of pages tested',
+			'%s is a placeholder for the percentage of pages tested. The second % is the percentage symbol.',
 			'carbonbadge-block'
 		).replace( '%s', data.p );
 
-		/*
-		 * translators: %s is a placeholder for the amount of CO2 in grams.
-		 */
-		const ofCO2Text = __( '%sg of CO₂/view', 'carbonbadge-block' ).replace(
-			'%s',
-			data.c
-		);
+		// translators: %s is a placeholder for the amount of CO2 in grams.
+		const ofCO2Text = _x(
+			'%sg of CO₂/view',
+			'%s is a placeholder for the amount of CO2 in grams.',
+			'carbonbadge-block'
+		).replace( '%s', data.c );
 
 		setMeasureDiv( ofCO2Text );
 		setBelowText( belowTextToSet );
@@ -119,16 +111,13 @@ export default function Edit( { attributes, setAttributes } ) {
 
 	useEffect( () => {
 		if ( 'fetch' in window ) {
-			const saved = localStorage.getItem( `wcb_${ urlToCheck }` );
-			const now = new Date().getTime();
-			if ( saved ) {
-				const jsonSaved = JSON.parse( saved );
-				renderResult( jsonSaved );
-				if ( now - jsonSaved.t > 864e5 ) {
-					newRequest( true );
-				}
-			} else {
+			setBelowText( '&nbsp;' );
+			setMeasureDiv( measuringText );
+			const saved = getFromStorage( urlToCheck );
+			if ( ! saved ) {
 				newRequest();
+			} else {
+				renderResult( saved );
 			}
 		}
 	}, [ urlToCheck ] );
@@ -167,11 +156,11 @@ export default function Edit( { attributes, setAttributes } ) {
 					<ToggleControl
 						checked={ !! showLinkToWebCarbon }
 						label={ __(
-							'Enable Website Carbon link',
+							'Add link to Website Carbon results',
 							'carbonbadge-block'
 						) }
 						help={ __(
-							'If checked, a link to the Website Carbon homepage will be shown on the badge. If not enabled, only the Website Carbon text will be shown, without any link.',
+							'If checked, a link to the Website Carbon site will be shown on the badge. If not enabled, only the Website Carbon text will be shown, without any link.',
 							'carbonbadge-block'
 						) }
 						onChange={ () =>
@@ -181,7 +170,10 @@ export default function Edit( { attributes, setAttributes } ) {
 						}
 					/>
 				</PanelBody>
-				<PanelBody title={ __( 'Advanced', 'carbonbadge-block' ) }>
+				<PanelBody
+					title={ __( 'Custom URL settings', 'carbonbadge-block' ) }
+					initialOpen={ false }
+				>
 					<ToggleControl
 						checked={ !! useCustomUrl }
 						label={ __( 'Use custom URL', 'carbonbadge-block' ) }
@@ -189,11 +181,18 @@ export default function Edit( { attributes, setAttributes } ) {
 							'If checked, the block will measure the carbon footprint of the URL provided below. If not enabled, the block will measure the carbon footprint of the current page.',
 							'carbonbadge-block'
 						) }
-						onChange={ () =>
+						onChange={ () => {
 							setAttributes( {
 								useCustomUrl: ! useCustomUrl,
-							} )
-						}
+							} );
+							setUrlToCheck(
+								getCurrentPage(
+									! useCustomUrl
+										? decodedCustomUrlToCheck
+										: window.location.href
+								)
+							);
+						} }
 					/>
 					{ useCustomUrl && (
 						<TextControl
@@ -227,7 +226,7 @@ export default function Edit( { attributes, setAttributes } ) {
 								className="wcb_a"
 								target="_blank"
 								rel="noopener noreferrer"
-								href="https://websitecarbon.com"
+								href={ `https://websitecarbon.com/website/${ urlToCheck }` }
 							>
 								Website Carbon
 							</a>
