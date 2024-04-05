@@ -4,7 +4,7 @@ Tags: block
 Donate link: https://buymeacoffee.com/garridinsi
 Requires at least: 6.5
 Tested up to: 6.5
-Stable tag: 1.1.0
+Stable tag: 1.2.0
 License: GPL-3.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -34,6 +34,13 @@ You can find the code of this plugin on [GitHub](https://github.com/garridinsi/c
 3. Place the block on any Gutenberg post or page.
 
 == Changelog ==
+= 1.2.0 =
+* Add an option to hide the badge link
+* Add an option to choose the tested page link
+* Now the Website Carbon link points to the results of the tested page
+* Improve code documentation
+* Improve code structure and readability
+
 = 1.1.0 =
 * Improve localization
 * Improve code documentation
