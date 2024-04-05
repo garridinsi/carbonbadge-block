@@ -5,9 +5,10 @@
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
  */
 import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
-import { PanelBody, ToggleControl } from '@wordpress/components';
-import { __, _n } from '@wordpress/i18n';
+import { PanelBody, ToggleControl, TextControl } from '@wordpress/components';
+import { __ } from '@wordpress/i18n';
 import React, { useEffect, useState } from 'react';
+import { getCurrentPage } from './controller';
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -32,43 +33,34 @@ export default function Edit( { attributes, setAttributes } ) {
 	/**
 	 * The attributes object. It contains the block's settings.
 	 * The useDarkMode attribute is a boolean that indicates whether the block should use dark mode or not.
+	 * The showLinkToWebCarbon attribute is a boolean that indicates whether the block should show a link to the Website Carbon website or not.
 	 *
 	 * @type {Object}
 	 */
-	const { useDarkMode } = attributes;
+	const { useDarkMode, showLinkToWebCarbon, customUrlToCheck, useCustomUrl } =
+		attributes;
 
-	const measuringText = __( 'Measuring CO₂', 'carbonbadge-block' );
+	const measuringText = __( 'Measuring CO₂...', 'carbonbadge-block' );
 	const [ measureDiv, setMeasureDiv ] = useState( measuringText );
 	const [ belowText, setBelowText ] = useState( '&nbsp;' );
 	const [ darkMode, setDarkMode ] = useState( useDarkMode );
-
-	/**
-	 * Indicates whether the current environment is the WordPress admin area.
-	 * @type {boolean}
-	 */
-	const isAdminEnv = window.location.href.indexOf( 'wp-admin' ) > -1;
-
-	/**
-	 * Gets the current page URL and encodes it. If the current environment is the WordPress admin area, it gets the URL of the front end.
-	 *
-	 * @type {string}
-	 */
-	const currentPage = encodeURIComponent(
-		isAdminEnv
-			? window.location.href.split( 'wp-admin' )[ 0 ]
-			: window.location.href
+	const [ linkToWebCarbon, setLinkToWebCarbon ] =
+		useState( showLinkToWebCarbon );
+	const [ useCustomUrlState, setUseCustomUrlState ] =
+		useState( useCustomUrl );
+	const [ decodedCustomUrlToCheck, setDecodedCustomUrlToCheck ] = useState(
+		decodeURIComponent( customUrlToCheck )
 	);
 
-	// Just for testing, should be commented out in production
-	// const currentPage = encodeURIComponent( 'https://enekogarrido.com' );
+	const whatUrl = useCustomUrlState
+		? decodedCustomUrlToCheck
+		: window.location.href;
 
-	/**
-	 * The URL to check. If the current page URL does not end with a slash, it appends one.
-	 * @type {string}
-	 */
-	const urlToCheck = currentPage.endsWith( '/' )
-		? currentPage
-		: `${ currentPage }/`;
+	const [ urlToCheck, setUrlToCheck ] = useState( getCurrentPage( whatUrl ) );
+
+	useEffect( () => {
+		newRequest( true );
+	}, [ urlToCheck ] );
 
 	/**
 	 * Makes a new request to the website carbon API and stores the result in local storage.
@@ -108,7 +100,7 @@ export default function Edit( { attributes, setAttributes } ) {
 		/*
 		 * translators: %s is a placeholder for the percentage of pages tested. Please note that &#37; means % and should be part of the text.
 		 */
-		const belowText = __(
+		const belowTextToSet = __(
 			'Cleaner than&nbsp;%s&#37; of pages tested',
 			'carbonbadge-block'
 		).replace( '%s', data.p );
@@ -122,7 +114,7 @@ export default function Edit( { attributes, setAttributes } ) {
 		);
 
 		setMeasureDiv( ofCO2Text );
-		setBelowText( belowText );
+		setBelowText( belowTextToSet );
 	};
 
 	useEffect( () => {
@@ -145,6 +137,20 @@ export default function Edit( { attributes, setAttributes } ) {
 		setDarkMode( useDarkMode );
 	}, [ useDarkMode ] );
 
+	useEffect( () => {
+		setLinkToWebCarbon( showLinkToWebCarbon );
+	}, [ showLinkToWebCarbon ] );
+
+	useEffect( () => {
+		setUseCustomUrlState( useCustomUrl );
+	}, [ useCustomUrl ] );
+
+	useEffect( () => {
+		setAttributes( {
+			customUrlToCheck: encodeURIComponent( decodedCustomUrlToCheck ),
+		} );
+	}, [ decodedCustomUrlToCheck ] );
+
 	return (
 		<>
 			<InspectorControls>
@@ -158,6 +164,51 @@ export default function Edit( { attributes, setAttributes } ) {
 							} )
 						}
 					/>
+					<ToggleControl
+						checked={ !! showLinkToWebCarbon }
+						label={ __(
+							'Enable Website Carbon link',
+							'carbonbadge-block'
+						) }
+						help={ __(
+							'If checked, a link to the Website Carbon homepage will be shown on the badge. If not enabled, only the Website Carbon text will be shown, without any link.',
+							'carbonbadge-block'
+						) }
+						onChange={ () =>
+							setAttributes( {
+								showLinkToWebCarbon: ! showLinkToWebCarbon,
+							} )
+						}
+					/>
+				</PanelBody>
+				<PanelBody title={ __( 'Advanced', 'carbonbadge-block' ) }>
+					<ToggleControl
+						checked={ !! useCustomUrl }
+						label={ __( 'Use custom URL', 'carbonbadge-block' ) }
+						help={ __(
+							'If checked, the block will measure the carbon footprint of the URL provided below. If not enabled, the block will measure the carbon footprint of the current page.',
+							'carbonbadge-block'
+						) }
+						onChange={ () =>
+							setAttributes( {
+								useCustomUrl: ! useCustomUrl,
+							} )
+						}
+					/>
+					{ useCustomUrl && (
+						<TextControl
+							label={ __( 'URL to check', 'carbonbadge-block' ) }
+							value={ decodedCustomUrlToCheck }
+							onChange={ ( value ) => {
+								setDecodedCustomUrlToCheck( value );
+							} }
+							onBlur={ () => {
+								setUrlToCheck(
+									getCurrentPage( decodedCustomUrlToCheck )
+								);
+							} }
+						/>
+					) }
 				</PanelBody>
 			</InspectorControls>
 			<div { ...blockProps }>
@@ -171,16 +222,18 @@ export default function Edit( { attributes, setAttributes } ) {
 								__html: measureDiv,
 							} }
 						></span>
-						<a
-							className="wcb_a"
-							target="_blank"
-							rel="noopener noreferrer"
-							href="https://websitecarbon.com"
-						>
-							{ /* translators: Don't translate, Website Carbon is
-							the name of a service: https://websitecarbon.com */ }
-							{ __( 'Website Carbon', 'carbonbadge-block' ) }
-						</a>
+						{ linkToWebCarbon ? (
+							<a
+								className="wcb_a"
+								target="_blank"
+								rel="noopener noreferrer"
+								href="https://websitecarbon.com"
+							>
+								Website Carbon
+							</a>
+						) : (
+							<span className="wcb_a">Website Carbon</span>
+						) }
 					</div>
 					<span
 						className="wcb_2"

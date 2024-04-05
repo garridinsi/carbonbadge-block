@@ -19,6 +19,13 @@
 	"attributes": {
 		"useDarkMode": {
 			"type": "boolean"
+		},
+		"useCustomUrl": {
+			"type": "boolean"
+		},
+		"customUrlToCheck": {
+			"type": "string",
+			"default": ""
 		}
 	}
 }

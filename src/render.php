@@ -68,10 +68,7 @@ wp_interactivity_state(
         <?php printf(__('%sg of CO₂/view', 'carbonbadge-block'), '<span data-wp-text="context.measureDiv"></span>'); ?>
       </span>
       <a class="wcb_a" target="_blank" rel="noopener noreferrer" href="https://websitecarbon.com">
-        <?php
-         /* translators: Don't translate, Website Carbon is the name of a service: https://websitecarbon.com */
-          esc_html_e('Website Carbon', 'carbonbadge-block');
-        ?>
+        Website Carbon
       </a>
     </div>
     <div data-wp-bind--hidden="!context.showTheResult">
