@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies
  */
-import { store, getContext } from '@wordpress/interactivity';
+import { store, getContext, withScope } from '@wordpress/interactivity';
 import {
 	getCurrentPage,
 	determineUrl,
@@ -32,8 +32,12 @@ const { state, actions } = store( 'carbonbadge-block', {
 		 * Renders the result of a measurement.
 		 * Gets the measurement and percentage values from the context.
 		 */
-		renderResult: () => {
+		*renderResult() {
 			const context = getContext();
+			if ( ! context || ! context.resultData ) {
+				context.measureDiv = state.i18n.noResult;
+				return;
+			}
 			const data = context.resultData;
 			if ( ! data || ! data.c || ! data.p ) {
 				context.measureDiv = state.i18n.noResult;
@@ -77,6 +81,7 @@ const { state, actions } = store( 'carbonbadge-block', {
 				} )
 				.catch( ( err ) => {
 					removeFromStorage( urlToCheck );
+					context.measureDiv = state.i18n.noResult;
 					throw new Error( err );
 				} );
 		},

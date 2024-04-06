@@ -4,7 +4,7 @@ Tags: block
 Donate link: https://buymeacoffee.com/garridinsi
 Requires at least: 6.5
 Tested up to: 6.5
-Stable tag: 1.2.1
+Stable tag: 1.2.2
 License: GPL-3.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -34,6 +34,9 @@ You can find the code of this plugin on [GitHub](https://github.com/garridinsi/c
 3. Place the block on any Gutenberg post or page.
 
 == Changelog ==
+= 1.2.2 =
+* Fix a error with an action on the view
+
 = 1.2.1 =
 * Fix some issues with translations
 

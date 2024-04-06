@@ -89,7 +89,7 @@ wp_interactivity_state(
     'showLinkToWebCarbon' => $show_link_to_wc,
     "i18n" => array(
       "measuringCO2" => __("Measuring CO₂", "carbonbadge-block"),
-      "noDataAvailable" => __("No data available", "carbonbadge-block"),
+      "noResult" => __("No Result", "carbonbadge-block"),
       "gOfCO2PerView" => __("%sg of CO₂/view", "carbonbadge-block"),
       "websiteCarbon" => __("Website Carbon", "carbonbadge-block"),
       "cleanerThan" => __("Cleaner than %s% of pages tested", "carbonbadge-block")
