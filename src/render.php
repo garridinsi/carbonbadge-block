@@ -91,7 +91,6 @@ wp_interactivity_state(
       "measuringCO2" => __("Measuring CO₂", "carbonbadge-block"),
       "noResult" => __("No Result", "carbonbadge-block"),
       "gOfCO2PerView" => __("%sg of CO₂/view", "carbonbadge-block"),
-      "websiteCarbon" => __("Website Carbon", "carbonbadge-block"),
       "cleanerThan" => __("Cleaner than %s% of pages tested", "carbonbadge-block")
     )
   )
