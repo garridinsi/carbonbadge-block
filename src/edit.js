@@ -6,7 +6,7 @@
  */
 import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
 import { PanelBody, ToggleControl, TextControl } from '@wordpress/components';
-import { __, _x } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 import React, { useEffect, useState } from 'react';
 import {
 	determineUrl,
@@ -46,7 +46,7 @@ export default function Edit( { attributes, setAttributes } ) {
 	const { useDarkMode, showLinkToWebCarbon, customUrlToCheck, useCustomUrl } =
 		attributes;
 
-	const measuringText = __( 'Measuring CO₂…', 'carbonbadge-block' );
+	const measuringText = __( 'Measuring CO₂', 'carbonbadge-block' );
 	const [ measureDiv, setMeasureDiv ] = useState( measuringText );
 	const [ belowText, setBelowText ] = useState( '&nbsp;' );
 	const [ darkMode, setDarkMode ] = useState( useDarkMode );
@@ -92,18 +92,16 @@ export default function Edit( { attributes, setAttributes } ) {
 	 */
 	const renderResult = ( data ) => {
 		// translators: %s is a placeholder for the percentage of pages tested. The second % is the percentage symbol.
-		const belowTextToSet = _x(
+		const belowTextToSet = __(
 			'Cleaner than %s% of pages tested',
-			'%s is a placeholder for the percentage of pages tested. The second % is the percentage symbol.',
 			'carbonbadge-block'
 		).replace( '%s', data.p );
 
 		// translators: %s is a placeholder for the amount of CO2 in grams.
-		const ofCO2Text = _x(
-			'%sg of CO₂/view',
-			'%s is a placeholder for the amount of CO2 in grams.',
-			'carbonbadge-block'
-		).replace( '%s', data.c );
+		const ofCO2Text = __( '%sg of CO₂/view', 'carbonbadge-block' ).replace(
+			'%s',
+			data.c
+		);
 
 		setMeasureDiv( ofCO2Text );
 		setBelowText( belowTextToSet );
