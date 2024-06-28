@@ -4,7 +4,7 @@ Tags: block, gutenberg, carbon, carbon footprint, website carbon, sustainability
 Donate link: https://buymeacoffee.com/garridinsi
 Requires at least: 6.5
 Tested up to: 6.5
-Stable tag: 1.2.3
+Stable tag: 1.3.0
 License: GPL-3.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
