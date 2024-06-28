@@ -1,6 +1,6 @@
 === Carbonbadge Block ===
 Contributors: garridinsi
-Tags: block
+Tags: block, gutenberg, carbon, carbon footprint, website carbon, sustainability, interactivity api
 Donate link: https://buymeacoffee.com/garridinsi
 Requires at least: 6.5
 Tested up to: 6.5
@@ -34,6 +34,9 @@ You can find the code of this plugin on [GitHub](https://github.com/garridinsi/c
 3. Place the block on any Gutenberg post or page.
 
 == Changelog ==
+= 1.2.4 =
+* Add blueprint.json file
+
 = 1.2.3 =
 * Remove Website Carbon text from i18n
 
