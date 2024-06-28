@@ -1,0 +1,28 @@
+{
+	"$schema": "https://playground.wordpress.net/blueprint-schema.json",
+	"preferredVersions": {
+		"php": "8.0",
+		"wp": "latest"
+	},
+	"landingPage": "/wp-admin/post-new.php",
+	"features": {
+		"networking": true
+	},
+	"steps": [
+		{
+			"step": "login",
+			"username": "admin",
+			"password": "password"
+		},
+		{
+			"step": "installPlugin",
+			"pluginZipFile": {
+				"resource": "wordpress.org/plugins",
+				"slug": "carbonbadge-block"
+			},
+			"options": {
+				"activate": true
+			}
+		}
+	]
+}
