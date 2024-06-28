@@ -34,6 +34,9 @@ You can find the code of this plugin on [GitHub](https://github.com/garridinsi/c
 3. Place the block on any Gutenberg post or page.
 
 == Changelog ==
+= 1.2.5 =
+* Add blueprint.json file
+
 = 1.2.4 =
 * Add blueprint.json file
 
