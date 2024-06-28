@@ -1,6 +1,6 @@
 {
 	"name": "carbonbadge-block",
-	"version": "1.3.2",
+	"version": "1.3.3",
 	"description": "An interactive block with the Interactivity API",
 	"author": "The WordPress Contributors",
 	"license": "GPL-3.0-or-later",
@@ -20,11 +20,11 @@
 		"[^.]*"
 	],
 	"dependencies": {
-		"@wordpress/interactivity": "^5.4.0",
+		"@wordpress/interactivity": "^6.2.0",
 		"react": "^18.2.0"
 	},
 	"devDependencies": {
-		"@wordpress/prettier-config": "^3.12.0",
-		"@wordpress/scripts": "^27.6.0"
+		"@wordpress/prettier-config": "^4.2.0",
+		"@wordpress/scripts": "^28.2.0"
 	}
 }

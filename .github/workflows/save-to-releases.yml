@@ -6,7 +6,7 @@ on:
             - 'v*'
     pull_request:
         tags:
-            - "v*" 
+            - 'v*'
 
 jobs:
     tag:
@@ -34,5 +34,4 @@ jobs:
               env:
                   SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
                   SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
-                  SOURCE_DIR: dist/
                   SLUG: carbonbadge-block
