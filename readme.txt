@@ -3,8 +3,8 @@ Contributors: garridinsi
 Tags: block, gutenberg, carbon, interactivity api, sustainability
 Donate link: https://buymeacoffee.com/garridinsi
 Requires at least: 6.5
-Tested up to: 6.5
-Stable tag: 1.3.3
+Tested up to: 6.6
+Stable tag: 1.3.4
 License: GPL-3.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
