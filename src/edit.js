@@ -69,7 +69,9 @@ export default function Edit( { attributes, setAttributes } ) {
 	const newRequest = () => {
 		fetch( `https://api.websitecarbon.com/b?url=${ urlToCheck }` )
 			.then( ( response ) => {
-				if ( ! response.ok ) throw Error( response );
+				if ( ! response.ok ) {
+					throw Error( response );
+				}
 				return response.json();
 			} )
 			.then( ( json ) => {

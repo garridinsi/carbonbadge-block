@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies
  */
-import { store, getContext, withScope } from '@wordpress/interactivity';
+import { store, getContext } from '@wordpress/interactivity';
 import {
 	getCurrentPage,
 	determineUrl,
@@ -71,7 +71,9 @@ const { state, actions } = store( 'carbonbadge-block', {
 
 			yield fetch( `https://api.websitecarbon.com/b?url=${ urlToCheck }` )
 				.then( ( res ) => {
-					if ( ! res.ok ) throw Error( res );
+					if ( ! res.ok ) {
+						throw Error( res );
+					}
 					return res.json();
 				} )
 				.then( ( json ) => {

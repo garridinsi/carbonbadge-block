@@ -5,6 +5,7 @@
  */
 
 .wcb {
+
 	&.carbonbadge {
 		--b1: #0e11a8;
 		--b2: #00ffbc;
@@ -12,6 +13,7 @@
 		text-align: center;
 		color: var(--b1);
 		line-height: 1.15;
+
 		sub {
 			vertical-align: middle;
 			position: relative;
@@ -19,6 +21,7 @@
 			font-size: 0.7em;
 		}
 	}
+
 	.wcb_2,
 	.wcb_a,
 	.wcb_g {
@@ -32,17 +35,20 @@
 		text-decoration: none;
 		margin: 0.2em 0;
 	}
+
 	.wcb_a,
 	.wcb_g {
 		padding: 0.3em 0.5em;
 		border: 0.13em solid var(--b2);
 	}
+
 	.wcb_g {
 		border-radius: 0.3em 0 0 0.3em;
 		background: #fff;
 		border-right: 0;
 		min-width: 8.2em;
 	}
+
 	.wcb_a {
 		border-radius: 0 0.3em 0.3em 0;
 		border-left: 0;
@@ -51,12 +57,15 @@
 		font-weight: 700;
 		border-color: var(--b1);
 	}
+
 	&.wcb-d {
+
 		.wcb_a {
 			color: var(--b1);
 			background: var(--b2);
 			border-color: var(--b2);
 		}
+
 		.wcb_2 {
 			color: #fff;
 		}
