@@ -26,6 +26,6 @@
 	},
 	"devDependencies": {
 		"@wordpress/prettier-config": "^4.3.0",
-		"@wordpress/scripts": "^28.3.0"
+		"@wordpress/scripts": "^32.5.0"
 	}
 }
